@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description"
+        content="The Hosts Change, The Fever Remains - A political commentary on Kenyan democracy and voter psychology by Denis Mungai A">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>The Hosts Change, The Fever Remains | Denis Mungai A</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Merriweather:wght@300;400;700;900&family=Merriweather+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #0a0a0f;
+            --bg-section: #111118;
+            --bg-card: #1a1a24;
+            --bg-card-alt: #14141e;
+            --fever-red: #c0392b;
+            --fever-glow: #e74c3c;
+            --amber: #e67e22;
+            --hope-green: #27ae60;
+            --gold: #d4a517;
+            --text-primary: #ecf0f1;
+            --text-muted: #95a5a6;
+            --text-dim: #6c7a89;
+            --kenya-red: #bb0000;
+            --kenya-green: #006600;
+            --border-subtle: rgba(255, 255, 255, 0.06);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Merriweather', Georgia, serif;
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--text-primary);
+            background: var(--bg-deep);
+            overflow-x: hidden;
+            font-weight: 400;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--fever-red), var(--fever-glow), var(--amber));
+            z-index: 1001;
+            transition: width 0.15s ease;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 15, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .nav-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.15rem;
+            color: var(--text-primary);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-primary);
+            font-family: 'Merriweather Sans', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.4rem 0.85rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            background: var(--fever-red);
+            border-color: var(--fever-red);
+        }
+
+        .nav-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Cover Section */
+        .cover {
+            min-height: 100vh;
+            min-height: 100dvh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: var(--bg-deep);
+            padding: 5rem 1.5rem 3rem;
+            text-align: center;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 30%, rgba(192, 57, 43, 0.15) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .cover-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.12;
+            z-index: 1;
+            filter: grayscale(40%);
+        }
+
+        .cover-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(10, 10, 15, 0.6) 0%, rgba(10, 10, 15, 0.85) 50%, rgba(10, 10, 15, 0.95) 100%);
+            z-index: 2;
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 3;
+            max-width: 900px;
+            padding: 1rem;
+        }
+
+        .cover-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 12vw, 6rem);
+            color: #ffffff;
+            line-height: 1.05;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 60px rgba(192, 57, 43, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .cover-divider {
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--fever-red), transparent);
+            margin: 1.5rem auto;
+        }
+
+        .cover-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+            color: var(--gold);
+            font-weight: 400;
+            font-style: italic;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .cover-meta {
+            font-family: 'Merriweather Sans', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-top: 1.5rem;
+            font-weight: 400;
+        }
+
+        .cover-meta .author-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 3px;
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .cover-meta .author-title {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .cover-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.75);
+            max-width: 700px;
+            margin: 2.5rem auto 0;
+            line-height: 2;
+            border-left: 3px solid var(--fever-red);
+            padding-left: 1.5rem;
+            text-align: left;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--fever-red), #a93226);
+            color: #fff;
+            font-family: 'Merriweather Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 0.9rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 25px rgba(192, 57, 43, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 35px rgba(192, 57, 43, 0.45);
+        }
+
+        .download-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Table of Contents */
+        .toc-section {
+            padding: 5rem 1.5rem;
+            background: var(--bg-section);
+            min-height: 100vh;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .toc-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 3rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+        }
+
+        .toc-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--fever-red);
+            margin: 1rem auto 0;
+        }
+
+        .toc {
+            list-style: none;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .toc li {
+            margin-bottom: 0.25rem;
+        }
+
+        .toc a {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: block;
+            padding: 0.7rem 1.25rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            border-left: 2px solid transparent;
+        }
+
+        .toc a:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
+            border-left-color: var(--fever-red);
+        }
+
+        .toc-chapter {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-top: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .toc-chapter a {
+            color: var(--text-primary);
+            font-weight: normal;
+        }
+
+        .toc-section-item {
+            padding-left: 1.5rem;
+        }
+
+        .toc-section-item a {
+            font-size: 0.9rem;
+            font-family: 'Merriweather Sans', sans-serif;
+        }
+
+        /* Chapter Openers */
+        .chapter-start {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 5rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-deep);
+        }
+
+        .chapter-start::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(192, 57, 43, 0.08) 0%, transparent 70%);
+        }
+
+        .chapter-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(8rem, 30vw, 18rem);
+            color: var(--fever-red);
+            opacity: 0.06;
+            position: absolute;
+            top: 5%;
+            font-weight: 400;
+            line-height: 1;
+        }
+
+        .chapter-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            z-index: 2;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .chapter-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: var(--text-muted);
+            font-style: italic;
+            z-index: 2;
+            position: relative;
+        }
+
+        .chapter-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            margin-top: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+            border: 1px solid var(--border-subtle);
+        }
+
+        /* Content Pages */
+        .content-page {
+            padding: 3.5rem 1.5rem 6rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-page h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 6vw, 2.8rem);
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            letter-spacing: 3px;
+            border-bottom: 2px solid var(--fever-red);
+            text-transform: uppercase;
+        }
+
+        .content-page h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            color: var(--text-primary);
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .content-page h3 {
+            font-family: 'Merriweather Sans', sans-serif;
+            font-size: 1rem;
+            color: var(--fever-glow);
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .content-page p {
+            margin-bottom: 1.5rem;
+            text-align: left;
+            color: rgba(236, 240, 241, 0.88);
+            font-weight: 300;
+        }
+
+        .drop-cap::first-letter {
+            float: left;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4.5rem;
+            line-height: 0.8;
+            padding-right: 0.1em;
+            color: var(--fever-red);
+        }
+
+        /* Pull Quotes */
+        .pull-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            font-style: italic;
+            color: var(--text-primary);
+            border-left: 3px solid var(--fever-red);
+            padding: 1.5rem 2rem;
+            margin: 2.5rem 0;
+            background: linear-gradient(135deg, rgba(192, 57, 43, 0.08) 0%, transparent 100%);
+            border-radius: 0 8px 8px 0;
+            line-height: 1.9;
+        }
+
+        .pull-quote cite {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-top: 0.75rem;
+            font-style: normal;
+            font-family: 'Merriweather Sans', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Statistics Box */
+        .stat-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 2rem;
+            margin: 2.5rem 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-box h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            color: var(--fever-glow);
+            margin-bottom: 1.5rem;
+            letter-spacing: 3px;
+        }
+
+        .stat-item {
+            margin-bottom: 1.25rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 6vw, 3rem);
+            color: var(--fever-glow);
+            display: block;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-family: 'Merriweather Sans', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Chart containers */
+        .chart-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .chart-container canvas {
+            max-height: 400px;
+        }
+
+        .chart-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .chart-source {
+            font-family: 'Merriweather Sans', sans-serif;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        figcaption {
+            font-family: 'Merriweather Sans', sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-top: 0.75rem;
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Data Tables */
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-card);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 500px;
+            font-family: 'Merriweather Sans', sans-serif;
+        }
+
+        th {
+            background: rgba(192, 57, 43, 0.15);
+            color: var(--fever-glow);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+        }
+
+        tr:hover td {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Lists */
+        ul,
+        ol {
+            margin: 1.25rem 0;
+            padding-left: 1.75rem;
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+            color: rgba(236, 240, 241, 0.85);
+            font-weight: 300;
+        }
+
+        li strong {
+            color: var(--fever-glow);
+            font-weight: 700;
+        }
+
+        /* Epigraph */
+        .epigraph {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-style: italic;
+            color: var(--text-muted);
+            text-align: center;
+            margin: 3rem 1rem;
+            line-height: 1.9;
+        }
+
+        .epigraph cite {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-top: 1rem;
+            font-style: normal;
+            font-family: 'Merriweather Sans', sans-serif;
+        }
+
+        .section-break {
+            text-align: center;
+            margin: 3rem 0;
+            color: var(--fever-red);
+            font-size: 1.75rem;
+            letter-spacing: 0.5rem;
+        }
+
+        /* References */
+        .references {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            padding-left: 1.5rem;
+        }
+
+        .references li {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .references em {
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
+        /* About Author */
+        .about-author {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            margin-top: 3rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .about-author h3 {
+            color: var(--fever-glow);
+            margin-top: 0;
+            font-size: 1.2rem;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 3px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 0.6rem;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .bottom-nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-family: 'Merriweather Sans', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+            cursor: pointer;
+            padding: 0.4rem 0.6rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bottom-nav-btn:hover,
+        .bottom-nav-btn.active {
+            color: var(--fever-glow);
+        }
+
+        .bottom-nav-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .content-page {
+                padding: 4rem 2.5rem 7rem;
+            }
+
+            .cover {
+                padding: 6rem 3rem 4rem;
+            }
+
+            .toc-section {
+                padding: 5rem 2.5rem;
+            }
+
+            .chapter-start {
+                padding: 6rem 2.5rem;
+            }
+
+            .top-nav {
+                padding: 0.85rem 2rem;
+            }
+
+            .nav-title {
+                font-size: 1.2rem;
+            }
+
+            .drop-cap::first-letter {
+                font-size: 5.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            html {
+                font-size: 18px;
+            }
+
+            .content-page {
+                max-width: 800px;
+                padding: 5rem 3rem 4rem;
+            }
+
+            .cover {
+                padding: 7rem 4rem 5rem;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .bottom-nav {
+                display: none;
+            }
+
+            .content-page {
+                padding-bottom: 3rem;
+            }
+        }
+
+        @media print {
+
+            .top-nav,
+            .bottom-nav,
+            .progress-bar {
+                display: none !important;
+            }
+
+            body {
+                background: #fff;
+                color: #000;
+            }
+
+            .cover {
+                page-break-after: always;
+            }
+
+            .chapter-start {
+                page-break-before: always;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        a:focus,
+        button:focus {
+            outline: 2px solid var(--fever-glow);
+            outline-offset: 2px;
+        }
+
+        ::selection {
+            background: var(--fever-red);
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <nav class="top-nav">
+        <span class="nav-title">The Hosts Change, The Fever Remains</span>
+        <div class="nav-buttons">
+            <a href="kenya_political_book.pdf" download class="nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                PDF
+            </a>
+        </div>
+    </nav>
+
+    <!-- COVER -->
+    <section class="cover" id="cover">
+        <img src="book_cover_image.png" alt="" class="cover-bg-image">
+        <div class="cover-overlay"></div>
+        <div class="cover-content">
+            <h1 class="cover-title">The Hosts Change,<br>The Fever Remains</h1>
+            <div class="cover-divider"></div>
+            <p class="cover-subtitle">The Suicidal Optimism of the Kenyan Voter</p>
+            <div class="cover-meta">
+                <span class="author-name">Denis Mungai A</span>
+                <span class="author-title">Writer · Data Scientist · Software Developer</span>
+                <p style="margin-top:1rem;">February 2026</p>
+            </div>
+            <div class="cover-quote">
+                "In Kenya, we do not elect leaders; we merely select the next strain of a fever that has been consuming
+                us for sixty years, driven by a suicidal optimism that this time, the parasite will mistake itself for
+                the cure."
+            </div>
+            <a href="kenya_political_book.pdf" download class="download-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Download PDF
+            </a>
+        </div>
+    </section>
+
+    <!-- TABLE OF CONTENTS -->
+    <section class="toc-section" id="toc">
+        <h2 class="toc-title">Contents</h2>
+        <ul class="toc">
+            <li class="toc-chapter"><a href="#prologue">Prologue: The Diagnosis</a></li>
+            <li class="toc-section-item"><a href="#prologue">A Nation in Recurring Fever</a></li>
+            <li class="toc-chapter"><a href="#chapter1">Chapter I: The Anatomy of the Fever</a></li>
+            <li class="toc-section-item"><a href="#chapter1">The Atmosphere of Artificial Euphoria</a></li>
+            <li class="toc-section-item"><a href="#chapter1-2">The Transient Hosts</a></li>
+            <li class="toc-section-item"><a href="#chapter1-3">The Operating System of 1963</a></li>
+            <li class="toc-chapter"><a href="#chapter2">Chapter II: The Psychological Autopsy</a></li>
+            <li class="toc-section-item"><a href="#chapter2">Defining Suicidal Optimism</a></li>
+            <li class="toc-section-item"><a href="#chapter2-2">The Stoic Lens: Loss of Agency</a></li>
+            <li class="toc-section-item"><a href="#chapter2-3">The Last Samurai Theme</a></li>
+            <li class="toc-chapter"><a href="#chapter3">Chapter III: The Architecture of Deceit</a></li>
+            <li class="toc-section-item"><a href="#chapter3">Features, Not Bugs</a></li>
+            <li class="toc-section-item"><a href="#chapter3-2">The Cycle of Consumption</a></li>
+            <li class="toc-section-item"><a href="#chapter3-3">The Dog Analogy</a></li>
+            <li class="toc-chapter"><a href="#chapter4">Chapter IV: Breaking the Fever</a></li>
+            <li class="toc-section-item"><a href="#chapter4">The Hard Truth</a></li>
+            <li class="toc-section-item"><a href="#chapter4-2">The Call to Mastery</a></li>
+            <li class="toc-section-item"><a href="#chapter4-3">The Refactoring of the Citizen's Mind</a></li>
+            <li class="toc-chapter"><a href="#epilogue">Epilogue: The Pen and the Knife</a></li>
+            <li class="toc-chapter"><a href="#data">Data Appendix: The Numbers Don't Lie</a></li>
+            <li class="toc-chapter"><a href="#references">References</a></li>
+        </ul>
+    </section>
+
+    <!-- PROLOGUE -->
+    <section class="chapter-start" id="prologue">
+        <span class="chapter-number">P</span>
+        <h1 class="chapter-title">Prologue</h1>
+        <p class="chapter-subtitle">The Diagnosis</p>
+    </section>
+
+    <section class="content-page">
+        <h1>A Nation in Recurring Fever</h1>
+        <p class="drop-cap">In Kenya, we do not elect leaders; we merely select the next strain of a fever that has been
+            consuming us for sixty years, driven by a suicidal optimism that this time, the parasite will mistake itself
+            for the cure.</p>
+        <p>This is not a book about politicians. It is not about Raila Odinga or William Ruto, about Uhuru Kenyatta or
+            Daniel arap Moi. They are merely characters in a much larger drama—a drama that predates them and will
+            outlast them. This is a book about us, the Kenyan voter. It is about the psychological condition that keeps
+            us returning to the ballot box with hope in our hearts, only to be disappointed again and again, yet
+            returning once more with the same hope, as if the definition of insanity were not doing the same thing
+            repeatedly and expecting different results.</p>
+        <p>The 2022 General Election recorded the lowest voter turnout in fifteen years—just 64.77% of registered voters
+            cast their ballots, down from 79.51% in 2017. This was not merely voter apathy; it was a silent scream, a
+            withdrawal of consent, a recognition by millions of Kenyans that the ritual had lost its meaning. Yet among
+            those who voted, the same patterns persisted—the same ethnic calculations, the same hope that this time
+            would be different, the same suicidal optimism.</p>
+
+        <div class="chart-container fade-in">
+            <p class="chart-title">Voter Turnout Decline (2002–2022)</p>
+            <canvas id="chartVoterTurnout"></canvas>
+            <p class="chart-source">Source: IEBC Post Election Evaluation Reports</p>
+        </div>
+        <figcaption>Figure 1 — Kenya's declining voter turnout reflects a growing crisis of confidence in the electoral
+            process</figcaption>
+
+        <p>What is this fever that grips us every election cycle? Why do we dance in the streets for politicians who
+            have done nothing to earn our trust? Why do we believe that changing the face at State House will change the
+            system that has impoverished us for generations?</p>
+        <div class="pull-quote">"The fever is not the politicians; the fever is the system they inhabit—a system
+            designed not for governance but for extraction, not for service but for patronage."</div>
+        <p>This book is an attempt to diagnose the fever. It is an uncomfortable examination of our political
+            psychology, our collective delusions, and the architecture of a system that has learned to survive by
+            changing its hosts while remaining essentially the same. It is written not to depress but to awaken—not to
+            destroy hope but to redirect it toward more productive avenues of change.</p>
+        <p>For if we do not understand the nature of our affliction, we cannot hope to cure it. And cure it we must, for
+            the fever is killing us—slowly, systematically, and with our own consent.</p>
+    </section>
+
+    <!-- CHAPTER I -->
+    <section class="chapter-start" id="chapter1">
+        <span class="chapter-number">I</span>
+        <h1 class="chapter-title">The Anatomy of the Fever</h1>
+        <p class="chapter-subtitle">Understanding the Political Euphoria</p>
+        <img src="chapter1_fever.png" alt="Political Fever" class="chapter-image" loading="lazy">
+    </section>
+
+    <section class="content-page">
+        <h1>The Atmosphere of Artificial Euphoria</h1>
+        <p class="drop-cap">There is a peculiar atmosphere that descends upon Kenya every five years—a feverish
+            excitement that seems to infect the entire nation. It begins months before the election, builds to a
+            crescendo in the final weeks, and then dissipates almost immediately after the results are announced,
+            leaving behind a hangover of disappointment and resignation.</p>
+        <p>This artificial euphoria is not accidental. It is manufactured, cultivated, and deployed with surgical
+            precision by the political class. The rallies, the music, the branded merchandise, the promises of
+            transformation—all of it is designed to create a collective hallucination in which the voter forgets the
+            failures of the past and believes, once again, that this time will be different.</p>
+        <p>The 2022 election campaign was a masterclass in this manufactured euphoria. Despite Kenya facing its worst
+            economic crisis in decades—with public debt exceeding $80 billion, youth unemployment at 67%, and nearly
+            half the population living in extreme poverty—the campaign was conducted as if these problems were minor
+            inconveniences that would be solved by the simple act of changing presidents.</p>
+
+        <div class="stat-box fade-in">
+            <h4>The Economic Reality Behind the Euphoria</h4>
+            <div class="stat-item"><span class="stat-number">68%</span><span class="stat-label">of every 100 shillings
+                    in tax revenue goes to debt servicing</span></div>
+            <div class="stat-item"><span class="stat-number">$80 Billion</span><span class="stat-label">in public
+                    debt—more than double the state budget</span></div>
+            <div class="stat-item"><span class="stat-number">67%</span><span class="stat-label">youth unemployment rate
+                    in 2024</span></div>
+        </div>
+
+        <p>The disconnect between the campaign rhetoric and the economic reality was staggering. Candidates promised
+            millions of jobs, universal healthcare, and economic transformation, while the data showed a nation drowning
+            in debt, with its productive sectors stagnant and its youth despairing. Yet the crowds cheered, the media
+            amplified the messages, and the voters prepared to make their choices as if these promises had any
+            connection to reality.</p>
+
+        <h2 id="chapter1-2">The Transient Hosts</h2>
+        <p>The Kenyan political class functions not as leaders in the traditional sense but as transient hosts for a
+            system that remains essentially unchanged. From Jomo Kenyatta to Daniel arap Moi, from Mwai Kibaki to Uhuru
+            Kenyatta, and now to William Ruto—the faces have changed, the ethnic calculations have shifted, but the
+            fundamental nature of the Kenyan state has remained remarkably consistent.</p>
+        <p>This is the first insight that must be grasped if we are to understand our condition: the politicians are not
+            the disease; they are merely the symptoms. The disease is the system itself—a system designed during the
+            colonial era, refined during the Kenyatta and Moi dictatorships, and preserved through the democratic
+            transition of 2002. It is a system built on extraction rather than production, on patronage rather than
+            merit, on ethnic mobilization rather than national unity.</p>
+
+        <div class="chart-container fade-in">
+            <p class="chart-title">Presidential Timeline — 60 Years, 5 Presidents</p>
+            <canvas id="chartPresidentialTimeline"></canvas>
+            <p class="chart-source">Source: IEBC Historical Records</p>
+        </div>
+        <figcaption>Figure 2 — Sixty years of independence: only two ethnic groups have produced presidents</figcaption>
+
+        <p>The transient nature of these hosts is essential to the system's survival. Every five or ten years, a new
+            face emerges with promises of change, giving the population hope that the fundamental problems will finally
+            be addressed. When these promises are inevitably broken, the population's disappointment is directed at the
+            individual rather than the system, and the cycle begins anew with the next host.</p>
+
+        <h2 id="chapter1-3">The Operating System of 1963</h2>
+        <p>The most profound illusion in Kenyan politics is the belief that we have undergone fundamental political
+            change since independence. We have not. What we have experienced is a series of user interface updates—the
+            buttons have moved, the colors have changed, but the underlying operating system remains the same one
+            installed in 1963.</p>
+        <p>This operating system has several core features that have persisted across all administrations:</p>
+        <ul>
+            <li><strong>Centralized executive power:</strong> The President controls appointments to all key
+                institutions, from the judiciary to the electoral commission to the anti-corruption agencies. This
+                ensures that no genuine check on executive power exists.</li>
+            <li><strong>Ethnic arithmetic:</strong> Political competition is structured around ethnic mobilization
+                rather than policy debate. The "tyranny of numbers" determines electoral outcomes, making policy
+                irrelevant.</li>
+            <li><strong>Patronage networks:</strong> Access to state resources is determined by political loyalty rather
+                than need or merit. The state functions as a spoils system to be distributed among supporters.</li>
+            <li><strong>Impunity:</strong> Those connected to power face no consequences for corruption or abuse of
+                office. The law is enforced selectively, primarily against the powerless and the opposition.</li>
+        </ul>
+        <div class="pull-quote">"The noise of the rallies is a collective hallucination designed to hide the fact that
+            the operating system hasn't been updated since 1963; only the UI changes."</div>
+        <p>The 2010 Constitution was supposed to change this. It introduced devolution, created independent
+            institutions, and promised a new era of governance. And to some extent, it did—the counties have provided
+            new avenues for service delivery, and some institutions have shown independence. But the fundamental
+            architecture of power remains unchanged. The President still controls the purse strings, still makes the key
+            appointments, and still determines who prospers and who suffers.</p>
+        <p>Until we recognize that the problem is not the hosts but the operating system they inhabit, we will continue
+            to cycle through the same pattern of hope and disappointment, election after election, generation after
+            generation.</p>
+    </section>
+
+    <!-- CHAPTER II -->
+    <section class="chapter-start" id="chapter2">
+        <span class="chapter-number">II</span>
+        <h1 class="chapter-title">The Psychological Autopsy</h1>
+        <p class="chapter-subtitle">Understanding Suicidal Optimism</p>
+        <img src="chapter2_cycle.png" alt="Political Cycle" class="chapter-image" loading="lazy">
+    </section>
+
+    <section class="content-page">
+        <h1>Defining Suicidal Optimism</h1>
+        <p class="drop-cap">Suicidal optimism is the recurring belief that a new predator will somehow protect the prey.
+            It is the conviction, against all evidence, that the politician who has spent decades in the same system
+            that has failed us will somehow be the one to transform it. It is the hope that the wolf, if given enough
+            time in the sheepfold, will become a shepherd.</p>
+        <p>This psychological condition is not unique to Kenya, but it has taken on a particularly virulent form here.
+            The reasons are historical and structural. We are a young nation that achieved independence with great hope
+            and optimism. The first decades of independence saw genuine economic growth and social transformation. The
+            disappointment of the Moi years was followed by the promise of multiparty democracy, and the disappointment
+            of the multiparty era was followed by the promise of the 2002 "Kibaki Tosha" moment, and the disappointment
+            of the Kibaki years was followed by the promise of the 2010 Constitution.</p>
+        <p>Each cycle of hope and disappointment has left its psychological scar, but it has not extinguished the hope
+            itself. If anything, the hope has become more desperate, more willing to believe in miracles, more
+            susceptible to the charms of any politician who promises transformation.</p>
+
+        <div class="chart-container fade-in">
+            <p class="chart-title">Why Kenyans Don't Vote — Root Causes of Apathy</p>
+            <canvas id="chartVoterApathy"></canvas>
+            <p class="chart-source">Source: URAIA Voter Apathy Study 2022</p>
+        </div>
+        <figcaption>Figure 3 — The root causes of voter apathy reveal deep distrust in the electoral process
+        </figcaption>
+
+        <p>The data from the 2022 elections reveals the extent of this crisis. According to URAIA's voter apathy study,
+            the main reasons Kenyans didn't vote were: lack of trust in the electoral process (33%), disinterest in
+            elections (32%), and the belief that elections would be rigged (20%). These are not the responses of a
+            healthy democracy; they are the responses of a population that has lost faith in the fundamental mechanisms
+            of representation.</p>
+
+        <h2 id="chapter2-2">The Stoic Lens: Loss of Agency</h2>
+        <p>The ancient Stoics made a distinction between what is within our control and what is not. They taught that
+            wisdom lies in focusing our energy on the former while accepting the latter with equanimity. The Kenyan
+            voter has lost this distinction. We focus obsessively on the external—the candidate's face, their promises,
+            their ethnic identity—while ignoring the internal—the systemic rot we consent to, the patronage networks we
+            participate in, the corruption we tolerate.</p>
+        <p>This loss of agency is not accidental. It is cultivated by a political class that benefits from our
+            passivity. We are encouraged to see politics as something that happens to us rather than something we do. We
+            are spectators at our own governance, cheering or booing from the sidelines while the real decisions are
+            made in boardrooms and private clubs.</p>
+        <div class="pull-quote">"We focus on the 'external' (the candidate's face) while ignoring the 'internal' (the
+            systemic rot we consent to)."</div>
+        <p>The 2024 Gen Z protests against the Finance Bill represented a partial recovery of this agency. For the first
+            time in decades, young Kenyans took to the streets not in support of a politician but in opposition to a
+            policy. They organized online, bypassing the traditional political structures, and forced the government to
+            withdraw the bill. It was a glimpse of what citizen power could look like when it is not mediated through
+            the ballot box.</p>
+        <p>But the protests also revealed the limits of this agency. The government responded with violence—at least 39
+            protesters were killed, 361 injured, and 627 arrested. The message was clear: citizen agency will be
+            tolerated only within narrow bounds, and those who step outside those bounds will be punished.</p>
+
+        <h2 id="chapter2-3">The Last Samurai Theme</h2>
+        <p>There is something noble in the Kenyan voter's persistence, something almost tragic in our willingness to
+            keep believing despite all evidence. It is the nobility of the last samurai, fighting a battle he knows he
+            cannot win because the alternative—surrender—is unthinkable.</p>
+        <p>But this nobility is misplaced. We are not fighting a battle; we are participating in a ritual designed to
+            fail us. We are not warriors; we are extras in a drama written and directed by others. Our participation in
+            elections does not challenge the system; it legitimizes it. Our votes are not weapons of change; they are
+            tokens of consent.</p>
+
+        <div class="chart-container fade-in">
+            <p class="chart-title">Youth Disengagement — The Silent Protest</p>
+            <canvas id="chartYouthDecline"></canvas>
+            <p class="chart-source">Source: IEBC Voter Registration Data</p>
+        </div>
+        <figcaption>Figure 4 — Youth voter registration decline signals a generation's withdrawal from formal politics
+        </figcaption>
+
+        <p>The youth understand this better than their elders. The decline in youth voter registration—from 45% of
+            registered voters in 2017 to 39.84% in 2022—is not apathy; it is a rational response to a system that has
+            failed them. Why participate in a ritual that has no connection to your lived reality? Why vote when you are
+            unemployed, when your education has not opened doors, when your future seems to consist of endless hustling
+            for survival?</p>
+        <p>Their withdrawal is a form of protest, a refusal to legitimize a system that offers them nothing. And their
+            return to the streets in 2024 was a declaration that they would find other ways to make their voices
+            heard—ways that did not depend on the ballot box or the political class.</p>
+    </section>
+
+    <!-- CHAPTER III -->
+    <section class="chapter-start" id="chapter3">
+        <span class="chapter-number">III</span>
+        <h1 class="chapter-title">The Architecture of Deceit</h1>
+        <p class="chapter-subtitle">Systemic Logic of Kenyan Politics</p>
+        <img src="chapter3_architecture.png" alt="Architecture of Deceit" class="chapter-image" loading="lazy">
+    </section>
+    <section class="content-page">
+        <h1>Features, Not Bugs</h1>
+        <p class="drop-cap">To understand the Kenyan political system, one must abandon the assumption that its
+            dysfunctions are accidental. Corruption is not a bug to be fixed; it is a feature designed into the system.
+            Tribal mobilization is not an unfortunate legacy of the past; it is a deliberate strategy of control. The
+            failure of development is not a consequence of poor planning; it is the inevitable result of a system
+            designed for extraction rather than production.</p>
+        <p>This is a difficult truth to accept. We prefer to believe that our leaders are well-intentioned but
+            incompetent, that corruption is the work of a few bad apples, that with the right policies and the right
+            people, the system can be made to work. But this belief is itself a form of suicidal optimism—a refusal to
+            see the system for what it is.</p>
+        <p>Consider corruption. Kenya ranks 130 out of 180 countries on Transparency International's Corruption
+            Perception Index, with a score of just 30 out of 100. This is not an accident or a failure of enforcement.
+            It is the result of a system in which those with political connections are above the law, in which
+            anti-corruption agencies are controlled by the very people they are supposed to investigate, and in which
+            the judiciary can be bought or intimidated.</p>
+        <div class="chart-container fade-in">
+            <p class="chart-title">Corruption Perception Index — Kenya vs. Region</p>
+            <canvas id="chartCorruption"></canvas>
+            <p class="chart-source">Source: Transparency International 2024</p>
+        </div>
+        <figcaption>Figure 5 — Kenya's Corruption Perception Index shows persistent high levels of corruption
+        </figcaption>
+        <p>The figures are staggering. According to Oxfam Kenya, the richest 1% of Kenyans control 78% of the country's
+            total financial wealth. The 125 richest Kenyans possess more wealth than 42.6 million citizens combined.
+            This concentration of wealth is not an unfortunate side effect of economic growth; it is the direct result
+            of a political system that channels public resources to private hands through corruption, patronage, and
+            cronyism.</p>
+        <div class="stat-box fade-in">
+            <h4>The Great Economic Divide</h4>
+            <div class="stat-item"><span class="stat-number">78%</span><span class="stat-label">of Kenya's financial
+                    wealth controlled by the richest 1%</span></div>
+            <div class="stat-item"><span class="stat-number">125</span><span class="stat-label">richest Kenyans own more
+                    than 42.6 million citizens combined</span></div>
+            <div class="stat-item"><span class="stat-number">214×</span><span class="stat-label">a CEO in top 10
+                    companies earns 214 times more than a teacher</span></div>
+        </div>
+        <h2 id="chapter3-2">The Cycle of Consumption</h2>
+        <p>The Kenyan political system functions as a cycle of consumption. Every five years, the population is fed a
+            new narrative of hope and transformation. They vote, hoping that this time will be different. The new
+            government takes office, appoints its loyalists to key positions, and begins the process of extracting
+            resources for itself and its supporters. Promises are broken, scandals emerge, and disappointment sets in.
+            By the next election, the population is ready for a new narrative, a new face, a new hope—and the cycle
+            begins again.</p>
+        <p>This cycle serves the interests of the political class perfectly. It keeps the population engaged enough to
+            legitimize the system through voting, but not engaged enough to demand fundamental change.</p>
+        <div class="chart-container fade-in">
+            <p class="chart-title">Wealth Distribution in Kenya (2024)</p>
+            <canvas id="chartWealth"></canvas>
+            <p class="chart-source">Source: Oxfam Kenya Inequality Report 2025</p>
+        </div>
+        <figcaption>Figure 6 — Extreme wealth concentration in Kenya undermines social cohesion</figcaption>
+        <h2 id="chapter3-3">The Dog Analogy</h2>
+        <p>There is an analogy that captures the essence of this system. Imagine a dog that is trained to expect a treat
+            every time it performs a trick. The dog learns the trick, performs it enthusiastically, and receives its
+            reward. Over time, the dog becomes so conditioned to the ritual that it continues to perform even when the
+            treats become smaller and less frequent.</p>
+        <p>The Kenyan voter is that dog. We have been trained to expect transformation every five years, to perform the
+            trick of voting in exchange for the promise of development. We perform enthusiastically, dancing at rallies
+            and cheering at promises, even though the treats have become smaller and less frequent with each cycle.</p>
+        <div class="pull-quote">"The system requires a fresh 'new leader' every few years to keep the populace pacified
+            while the devouring continues unabated."</div>
+        <p>The system requires this fresh "new leader" every few years to keep the populace pacified while the devouring
+            continues unabated. The new leader provides the illusion of change, the hope of transformation, the
+            narrative that allows the system to survive another cycle.</p>
+        <p>The 2022 election was a variation on this theme. William Ruto positioned himself as the "hustler" candidate,
+            the outsider who would challenge the dynasties and transform the system. He promised a "bottom-up" economic
+            model that would lift the poor out of poverty. And yet, within months of taking office, his government was
+            proposing tax increases on basic commodities, his officials were embroiled in corruption scandals, and the
+            economic situation of ordinary Kenyans was deteriorating.</p>
+        <p>The system had changed its host, but the fever remained.</p>
+    </section>
+
+    <!-- CHAPTER IV -->
+    <section class="chapter-start" id="chapter4">
+        <span class="chapter-number">IV</span>
+        <h1 class="chapter-title">Breaking the Fever</h1>
+        <p class="chapter-subtitle">Pathways to Genuine Change</p>
+        <img src="chapter4_awakening.png" alt="Awakening" class="chapter-image" loading="lazy">
+    </section>
+    <section class="content-page">
+        <h1>The Hard Truth</h1>
+        <p class="drop-cap">The fever will not break by changing the host. This is the hard truth that must be accepted
+            if we are to move forward. No politician, however well-intentioned, can transform a system that is designed
+            to resist transformation. No election, however free and fair, can produce outcomes that the system is not
+            designed to deliver.</p>
+        <p>This truth is difficult to accept because it challenges our most deeply held beliefs about democracy. We have
+            been taught that voting is the primary mechanism of change, that the ballot box is where citizens exercise
+            their power. And in a well-functioning democracy, these things are true. But Kenya is not a well-functioning
+            democracy. It is a competitive authoritarian system in which elections serve to legitimize rather than
+            challenge the existing order.</p>
+        <p>The 2024 Finance Bill protests offered a glimpse of an alternative. When young Kenyans took to the streets,
+            they bypassed the electoral system entirely. They did not wait for the next election to express their
+            grievances; they expressed them directly, through collective action. And they achieved something that
+            decades of voting had not achieved—they forced the government to withdraw a policy.</p>
+        <div class="chart-container fade-in">
+            <p class="chart-title">Kenya's Debt Crisis — Revenue vs. Debt Servicing</p>
+            <canvas id="chartDebtCrisis"></canvas>
+            <p class="chart-source">Source: World Bank & Transparency International 2025</p>
+        </div>
+        <figcaption>Figure 7 — Kenya's debt crisis crowds out spending on essential public services</figcaption>
+        <p>Elections still matter—they determine who holds power, who makes appointments, who controls the purse
+            strings. But they are not sufficient. They are one tool among many, and in the Kenyan context, they are not
+            the most effective tool for achieving fundamental change.</p>
+        <h2 id="chapter4-2">The Call to Mastery</h2>
+        <p>The Stoics taught that the path to freedom lies in mastering oneself—one's desires, one's fears, one's
+            reactions to external events. This is the challenge facing the Kenyan voter: to master our suicidal
+            optimism, to see the system clearly for what it is, and to channel our energy toward strategies that have a
+            genuine chance of producing change.</p>
+        <ul>
+            <li><strong>Clarity of vision:</strong> We must see the system for what it is—not a broken democracy that
+                can be fixed with better leaders, but a functioning extraction machine that serves the interests of a
+                small elite.</li>
+            <li><strong>Strategic patience:</strong> Fundamental change does not happen in five-year electoral cycles.
+                It requires sustained organizing, institution-building, and culture-changing work over decades.</li>
+            <li><strong>Diversified tactics:</strong> Voting is one tactic among many. We must also engage in protest,
+                in civil society organizing, in media activism, in economic self-organization.</li>
+            <li><strong>Collective solidarity:</strong> The system thrives on our division. We must build solidarity
+                across these divisions.</li>
+        </ul>
+        <div class="pull-quote">"True 'change' requires a 'refactoring' of the citizen's mind—a move from optimism to
+            clarity."</div>
+        <h2 id="chapter4-3">The Refactoring of the Citizen's Mind</h2>
+        <p>The most profound change must happen within ourselves. We must refactor our minds—restructure our
+            assumptions, our beliefs, our automatic responses to political stimuli. We must move from optimism to
+            clarity, from hope to strategy, from passive spectatorship to active citizenship.</p>
+        <p><strong>From personality to structure:</strong> We must stop evaluating politicians based on their
+            personalities, their charisma, or their promises, and start evaluating them based on the structural
+            constraints they face and the interests they represent.</p>
+        <p><strong>From events to processes:</strong> We must stop focusing on electoral events as the primary sites of
+            political change and start focusing on the ongoing processes of organizing, advocacy, and
+            institution-building.</p>
+        <p><strong>From consumption to production:</strong> We must stop consuming politics as spectators and start
+            producing it as active participants—organizing in our communities, holding leaders accountable, building
+            alternative institutions.</p>
+        <p><strong>From ethnic to civic identity:</strong> We must stop seeing ourselves primarily as Kikuyu, Luo,
+            Kalenjin, or Luhya, and start seeing ourselves primarily as Kenyan citizens with shared interests and common
+            destiny.</p>
+        <p>These shifts are difficult. They go against decades of conditioning, against the habits of a lifetime. But
+            they are necessary if we are to break the fever and build a genuinely democratic Kenya.</p>
+    </section>
+
+    <!-- EPILOGUE -->
+    <section class="chapter-start" id="epilogue">
+        <span class="chapter-number">E</span>
+        <h1 class="chapter-title">Epilogue</h1>
+        <p class="chapter-subtitle">The Pen and the Knife</p>
+    </section>
+    <section class="content-page">
+        <h1>The Final Image</h1>
+        <p class="drop-cap">Imagine a voter standing at the ballot box. In their hand is a pen, the instrument of
+            democratic participation, the symbol of citizen power. But as they look more closely, they realize that the
+            pen is actually a knife—a knife they have been using, election after election, to cut their own throat.</p>
+        <p>This is the final image I want to leave with you. Not to depress you, not to make you despair, but to wake
+            you up. The ballot box is not the only site of political action, and the pen is not the only instrument of
+            change. We have other tools at our disposal—our voices, our feet, our organizing power, our economic
+            leverage, our collective solidarity.</p>
+        <p>The 2024 Gen Z protests showed us what is possible when citizens stop waiting for the next election and start
+            taking action in the present. They showed us that the fever can break, if we are willing to take the
+            medicine.</p>
+        <div class="epigraph">"The arc of the moral universe is long, but it bends toward justice—if we bend it."<cite>—
+                Adapted from Martin Luther King Jr.</cite></div>
+        <p>The task before us is not easy. The system has survived for sixty years because it is resilient. But there is
+            always an alternative. The alternative begins with clarity. It continues with organization. And it
+            culminates in action—the sustained, strategic pressure that can force fundamental change.</p>
+        <p>The hosts will continue to change. New faces will emerge with new promises. The fever will try to reassert
+            itself. But we will know better. We will see the system clearly, we will organize strategically, and we will
+            act collectively. And slowly, painfully, but inevitably, we will bend the arc of our nation's history toward
+            justice.</p>
+        <p class="section-break">* * *</p>
+        <p>The voter at the ballot box looks at the pen in their hand. They see it for what it is—a knife they have been
+            using against themselves. And for the first time, they decide to put it down. They turn away from the ballot
+            box and walk toward their community, their neighbors, their fellow citizens. They begin to organize, to
+            mobilize, to build the collective power that can challenge the system itself.</p>
+        <p>This is where the story begins. Not at the ballot box, but in the streets, in the communities, in the
+            countless acts of solidarity and resistance that build the foundation of genuine democracy. The fever is
+            breaking. The awakening has begun. The future is ours to shape.</p>
+    </section>
+
+    <!-- DATA APPENDIX -->
+    <section class="content-page" id="data">
+        <h1>Data Appendix: The Numbers Don't Lie</h1>
+        <h2>Table 1: Voter Turnout Trends (2002-2022)</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Registered Voters</th>
+                        <th>Voter Turnout</th>
+                        <th>Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2002</td>
+                        <td>10,451,150</td>
+                        <td>56.0%</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>2007</td>
+                        <td>14,296,180</td>
+                        <td>69.1%</td>
+                        <td>+13.1%</td>
+                    </tr>
+                    <tr>
+                        <td>2013</td>
+                        <td>14,352,533</td>
+                        <td>85.9%</td>
+                        <td>+16.8%</td>
+                    </tr>
+                    <tr>
+                        <td>2017</td>
+                        <td>19,611,423</td>
+                        <td>79.5%</td>
+                        <td>-6.4%</td>
+                    </tr>
+                    <tr>
+                        <td>2022</td>
+                        <td>22,120,458</td>
+                        <td>64.8%</td>
+                        <td>-14.7%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>Table 2: 2022 Presidential Election Results</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Candidate</th>
+                        <th>Votes</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>William Ruto</td>
+                        <td>7,176,141</td>
+                        <td>50.49%</td>
+                    </tr>
+                    <tr>
+                        <td>Raila Odinga</td>
+                        <td>6,942,930</td>
+                        <td>48.85%</td>
+                    </tr>
+                    <tr>
+                        <td>George Wajackoyah</td>
+                        <td>61,969</td>
+                        <td>0.44%</td>
+                    </tr>
+                    <tr>
+                        <td>David Mwaure</td>
+                        <td>31,987</td>
+                        <td>0.23%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>Table 3: Economic Indicators (2024)</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Value</th>
+                        <th>Source</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Public Debt</td>
+                        <td>$80+ billion</td>
+                        <td>World Bank</td>
+                    </tr>
+                    <tr>
+                        <td>Debt Servicing (% of revenue)</td>
+                        <td>68%</td>
+                        <td>Oxfam Kenya</td>
+                    </tr>
+                    <tr>
+                        <td>Youth Unemployment</td>
+                        <td>67%</td>
+                        <td>Transparency International</td>
+                    </tr>
+                    <tr>
+                        <td>Extreme Poverty Rate</td>
+                        <td>46%</td>
+                        <td>World Bank</td>
+                    </tr>
+                    <tr>
+                        <td>Wealth Controlled by Richest 1%</td>
+                        <td>78%</td>
+                        <td>Oxfam Kenya</td>
+                    </tr>
+                    <tr>
+                        <td>Corruption Perception Index</td>
+                        <td>30/100 (Rank 130/180)</td>
+                        <td>Transparency International</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>Table 4: Causes of Voter Apathy (2022)</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Reason</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Lack of trust in electoral process</td>
+                        <td>33%</td>
+                    </tr>
+                    <tr>
+                        <td>Disinterest in elections</td>
+                        <td>32%</td>
+                    </tr>
+                    <tr>
+                        <td>Belief that elections are rigged</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr>
+                        <td>Belief preferred candidate won't win</td>
+                        <td>15%</td>
+                    </tr>
+                    <tr>
+                        <td>Lack of money for transport</td>
+                        <td>14%</td>
+                    </tr>
+                    <tr>
+                        <td>Lack of knowledge about process</td>
+                        <td>12%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="font-size:0.85rem;color:var(--text-dim);margin-top:0.75rem;"><em>Source: URAIA Voter Apathy Study
+                2022</em></p>
+    </section>
+
+    <!-- REFERENCES -->
+    <section class="content-page" id="references">
+        <h1>References</h1>
+        <ol class="references">
+            <li>African Union & COMESA. (2022). <em>Election Observation Mission Report: Kenya General Elections
+                    2022</em>.</li>
+            <li>Commission of Inquiry into Post-Election Violence. (2008). <em>Report of the Commission of Inquiry into
+                    Post-Election Violence</em>.</li>
+            <li>GeoPoll. (2022). <em>Kenya Elections 2022: A Survey Report</em>.</li>
+            <li>IEBC. (2022). <em>Post Election Evaluation Report</em>.</li>
+            <li>Kenya National Bureau of Statistics. (2024). <em>Economic Survey 2024</em>.</li>
+            <li>Kofi Annan Foundation. (2022). <em>Kenya Post-Election Roundtable 2022 Review</em>.</li>
+            <li>Ndiritu Muriithi, Kiama Kaara, & Githinji Ndiritu. (2024). <em>Kenya's Public Debt Crisis</em>. NDI.
+            </li>
+            <li>Oduor, R. M. J. <em>The History of Ethnicised Politics in Kenya</em>. African Journal of Political
+                Science.</li>
+            <li>Oxfam Kenya. (2025). <em>Kenya's Inequality Crisis: The Great Economic Divide</em>.</li>
+            <li>Stats Kenya. (2025). <em>Kenya General Elections Presidential Results and Voter Turnout 2022</em>.</li>
+            <li>Transparency International. (2024). <em>Corruption Perceptions Index 2024</em>.</li>
+            <li>Transparency International. (2025). <em>Kenya's Debt Crisis: Misaligned Financing and Corruption</em>.
+            </li>
+            <li>URAIA Trust. (2022). <em>Voter Apathy Study 2022: Final Report</em>.</li>
+            <li>USIP. (2013). <em>Elections and Violent Conflict in Kenya</em>.</li>
+            <li>WFD & NIMD. (2021). <em>The Cost of Politics in Kenya</em>.</li>
+            <li>World Bank. (2025). <em>Kenya Economic Update</em>.</li>
+        </ol>
+        <div class="about-author">
+            <h3>About the Author</h3>
+            <p><strong style="color:var(--text-primary);">Denis Mungai A</strong> is a writer, data scientist, and
+                software developer. This book is a work of political commentary and analysis, synthesizing research from
+                multiple sources. The views expressed are intended to stimulate critical thinking about Kenya's
+                political system and the possibilities for genuine democratic transformation.</p>
+            <p style="margin-top:1rem;color:var(--text-dim);">The title and conceptual framework were inspired by a
+                conversation between the author and Google's Gemini AI, which helped articulate the central metaphor of
+                the "fever" that persists despite changing political hosts.</p>
+            <p style="margin-top:1rem;"><em>Published: February 2026</em></p>
+        </div>
+    </section>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="bottom-nav-btn" onclick="scrollToSection('cover')"><svg viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg><span>Cover</span></button>
+        <button class="bottom-nav-btn" onclick="scrollToSection('toc')"><svg viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <line x1="8" y1="6" x2="21" y2="6" />
+                <line x1="8" y1="12" x2="21" y2="12" />
+                <line x1="8" y1="18" x2="21" y2="18" />
+                <line x1="3" y1="6" x2="3.01" y2="6" />
+                <line x1="3" y1="12" x2="3.01" y2="12" />
+                <line x1="3" y1="18" x2="3.01" y2="18" />
+            </svg><span>Contents</span></button>
+        <button class="bottom-nav-btn" onclick="scrollToSection('prologue')"><svg viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+            </svg><span>Read</span></button>
+        <a href="kenya_political_book.pdf" download class="bottom-nav-btn" style="text-decoration:none;"><svg
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+            </svg><span>PDF</span></a>
+    </nav>
+
+    <script>
+        // ===== GLOBAL CHART DEFAULTS =====
+        Chart.defaults.color = '#95a5a6';
+        Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+        Chart.defaults.font.family = "'Merriweather Sans', sans-serif";
+        Chart.defaults.font.size = 12;
+        Chart.defaults.plugins.legend.labels.usePointStyle = true;
+        Chart.defaults.plugins.legend.labels.pointStyleWidth = 12;
+        Chart.defaults.plugins.legend.labels.padding = 16;
+
+        const feverRed = '#c0392b';
+        const feverGlow = '#e74c3c';
+        const amber = '#e67e22';
+        const gold = '#d4a517';
+        const hopeGreen = '#27ae60';
+        const dimGray = '#6c7a89';
+        const cardBg = '#1a1a24';
+
+        // ===== 1. VOTER TURNOUT BAR CHART =====
+        new Chart(document.getElementById('chartVoterTurnout'), {
+            type: 'bar',
+            data: {
+                labels: ['2002', '2007', '2013', '2017', '2022'],
+                datasets: [{
+                    label: 'Voter Turnout (%)',
+                    data: [56.0, 69.1, 85.9, 79.5, 64.8],
+                    backgroundColor: [dimGray, amber, hopeGreen, amber, feverRed],
+                    borderColor: [dimGray, amber, hopeGreen, amber, feverGlow],
+                    borderWidth: 1, borderRadius: 6, barPercentage: 0.65
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: true, aspectRatio: 2,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { backgroundColor: cardBg, titleColor: '#fff', bodyColor: '#95a5a6', borderColor: feverRed, borderWidth: 1, padding: 12, cornerRadius: 8 }
+                },
+                scales: {
+                    y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // ===== 2. PRESIDENTIAL TIMELINE HORIZONTAL BAR =====
+        new Chart(document.getElementById('chartPresidentialTimeline'), {
+            type: 'bar',
+            data: {
+                labels: ['Jomo Kenyatta', 'Daniel arap Moi', 'Mwai Kibaki', 'Uhuru Kenyatta', 'William Ruto'],
+                datasets: [{
+                    label: 'Years in Office',
+                    data: [15, 24, 10, 10, 3],
+                    backgroundColor: [feverRed, amber, hopeGreen, feverRed, gold],
+                    borderRadius: 6, barPercentage: 0.6
+                }]
+            },
+            options: {
+                indexAxis: 'y', responsive: true, maintainAspectRatio: true, aspectRatio: 1.8,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: cardBg, titleColor: '#fff', bodyColor: '#95a5a6', borderColor: feverRed, borderWidth: 1, padding: 12, cornerRadius: 8,
+                        callbacks: { label: ctx => ctx.raw + ' years' }
+                    }
+                },
+                scales: {
+                    x: { beginAtZero: true, ticks: { callback: v => v + ' yrs' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+
+        // ===== 3. VOTER APATHY HORIZONTAL BAR =====
+        new Chart(document.getElementById('chartVoterApathy'), {
+            type: 'bar',
+            data: {
+                labels: ['Lack of trust', 'Disinterest', 'Elections rigged', "Candidate won't win", 'No transport money', 'Lack of knowledge'],
+                datasets: [{
+                    label: 'Percentage',
+                    data: [33, 32, 20, 15, 14, 12],
+                    backgroundColor: [feverRed, feverGlow, amber, gold, dimGray, dimGray],
+                    borderRadius: 6, barPercentage: 0.55
+                }]
+            },
+            options: {
+                indexAxis: 'y', responsive: true, maintainAspectRatio: true, aspectRatio: 1.6,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: cardBg, titleColor: '#fff', bodyColor: '#95a5a6', borderColor: feverRed, borderWidth: 1, padding: 12, cornerRadius: 8,
+                        callbacks: { label: ctx => ctx.raw + '%' }
+                    }
+                },
+                scales: {
+                    x: { beginAtZero: true, max: 40, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+                    y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+                }
+            }
+        });
+
+        // ===== 4. YOUTH DECLINE LINE CHART =====
+        new Chart(document.getElementById('chartYouthDecline'), {
+            type: 'line',
+            data: {
+                labels: ['2013', '2017', '2022'],
+                datasets: [{
+                    label: 'Youth (18-35) % of Registered Voters',
+                    data: [51, 45, 39.84],
+                    borderColor: feverRed, backgroundColor: 'rgba(192,57,43,0.1)',
+                    borderWidth: 3, fill: true, tension: 0.3,
+                    pointBackgroundColor: feverGlow, pointBorderColor: '#fff',
+                    pointRadius: 6, pointHoverRadius: 9
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: true, aspectRatio: 2,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        backgroundColor: cardBg, titleColor: '#fff', bodyColor: '#95a5a6', borderColor: feverRed, borderWidth: 1, padding: 12, cornerRadius: 8,
+                        callbacks: { label: ctx => ctx.raw + '%' }
+                    }
+                },
+                scales: {
+                    y: { min: 30, max: 55, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // ===== 5. CORRUPTION CPI BAR =====
+        new Chart(document.getElementById('chartCorruption'), {
+            type: 'bar',
+            data: {
+                labels: ['Denmark\n(Top)', 'Rwanda', 'South Africa', 'Tanzania', 'Kenya', 'Uganda', 'Somalia\n(Bottom)'],
+                datasets: [{
+                    label: 'CPI Score (0-100)',
+                    data: [90, 54, 41, 40, 30, 26, 12],
+                    backgroundColor: ctx => ctx.raw >= 50 ? hopeGreen : ctx.raw >= 30 ? amber : feverRed,
+                    borderRadius: 6, barPercentage: 0.6
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: true, aspectRatio: 2,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: cardBg, titleColor: '#fff', bodyColor: '#95a5a6', borderColor: feverRed, borderWidth: 1, padding: 12, cornerRadius: 8,
+                        callbacks: { label: ctx => 'Score: ' + ctx.raw + '/100' }
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.04)' } },
+                    x: { grid: { display: false }, ticks: { font: { size: 10 } } }
+                }
+            }
+        });
+
+        // ===== 6. WEALTH INEQUALITY DOUGHNUT =====
+        new Chart(document.getElementById('chartWealth'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Richest 1%', 'Next 9%', 'Remaining 90%'],
+                datasets: [{
+                    data: [78, 14, 8],
+                    backgroundColor: [feverRed, amber, dimGray],
+                    borderColor: cardBg, borderWidth: 3, hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: true, aspectRatio: 1.8,
+                cutout: '55%',
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        backgroundColor: cardBg, titleColor: '#fff', bodyColor: '#95a5a6', borderColor: feverRed, borderWidth: 1, padding: 12, cornerRadius: 8,
+                        callbacks: { label: ctx => ctx.label + ': ' + ctx.raw + '% of wealth' }
+                    }
+                }
+            }
+        });
+
+        // ===== 7. DEBT CRISIS STACKED BAR =====
+        new Chart(document.getElementById('chartDebtCrisis'), {
+            type: 'bar',
+            data: {
+                labels: ['2015', '2017', '2019', '2021', '2023', '2024'],
+                datasets: [
+                    { label: 'Debt Servicing', data: [42, 49, 52, 58, 64, 68], backgroundColor: feverRed, borderRadius: { topLeft: 6, topRight: 6 }, barPercentage: 0.55 },
+                    { label: 'Other Spending', data: [58, 51, 48, 42, 36, 32], backgroundColor: dimGray, borderRadius: 0, barPercentage: 0.55 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: true, aspectRatio: 2,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        backgroundColor: cardBg, titleColor: '#fff', bodyColor: '#95a5a6', borderColor: feverRed, borderWidth: 1, padding: 12, cornerRadius: 8,
+                        callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.raw + '% of revenue' }
+                    }
+                },
+                scales: {
+                    x: { stacked: true, grid: { display: false } },
+                    y: { stacked: true, beginAtZero: true, max: 100, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.04)' } }
+                }
+            }
+        });
+
+        // ===== PROGRESS BAR =====
+        function updateProgressBar() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = scrollPercent + '%';
+        }
+        window.addEventListener('scroll', updateProgressBar);
+
+        // ===== SMOOTH SCROLL =====
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ===== ACTIVE NAV =====
+        function updateActiveNav() {
+            const secs = ['cover', 'toc', 'prologue', 'chapter1', 'chapter2', 'chapter3', 'chapter4', 'epilogue', 'data', 'references'];
+            const sp = window.scrollY + window.innerHeight / 2;
+            document.querySelectorAll('.bottom-nav-btn').forEach(b => b.classList.remove('active'));
+        }
+        window.addEventListener('scroll', updateActiveNav);
+
+        // ===== SCROLL ANIMATIONS =====
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    fadeObserver.unobserve(entry.target);
+                }
+            });
+        }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+        // ===== LAZY LOAD IMAGES =====
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('loaded');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { rootMargin: '50px 0px' });
+        document.querySelectorAll('img[loading="lazy"]').forEach(img => imageObserver.observe(img));
+
+        // ===== STAT NUMBER COUNTER ANIMATION =====
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const nums = entry.target.querySelectorAll('.stat-number');
+                    nums.forEach(n => {
+                        n.style.opacity = '0';
+                        n.style.transform = 'translateY(15px)';
+                        setTimeout(() => {
+                            n.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                            n.style.opacity = '1';
+                            n.style.transform = 'translateY(0)';
+                        }, 200);
+                    });
+                    statObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        document.querySelectorAll('.stat-box').forEach(el => statObserver.observe(el));
+    </script>
+</body>
+
+</html>
